@@ -28,9 +28,9 @@ export class AddReviewHandler implements HandlerStrategy {
   async handle(req: Request): Promise<Response> {
     const videoGameId = this.getVideoGameId(new URL(req.url).pathname);
 
-    if (typeof videoGameId !== 'number') {
-      throw new Error('Bad video game id');
-    } 
+    if (typeof videoGameId !== "number") {
+      throw new Error("Bad video game id");
+    }
 
     const review = await this.reviewRepository.createNewReview(
       videoGameId,

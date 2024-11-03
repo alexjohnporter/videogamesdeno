@@ -1,4 +1,5 @@
 import { AddReviewHandler } from "./handlers/addReview.ts";
+import { GetReviewsHandler } from "./handlers/getReviews.ts";
 import { HandlerStrategy } from "./handlers/handlerStrategyInterface.ts";
 import { HelloWorldHandler } from "./handlers/helloWorld.ts";
 import { VideoGamesHandler } from "./handlers/videoGames.ts";
@@ -9,6 +10,7 @@ export class StrategyHandler {
     new HelloWorldHandler(),
     new VideoGamesHandler(),
     new AddReviewHandler(),
+    new GetReviewsHandler()
     // ... other strategies
   ];
 
@@ -22,9 +24,8 @@ export class StrategyHandler {
         try {
           return strategy.handle(req);
         } catch {
-          return JsonResponse({ message: 'An error occurred' }, 404);
+          return JsonResponse({ message: "An error occurred" }, 404);
         }
-        
       }
     }
 
