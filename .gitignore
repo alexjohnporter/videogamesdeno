@@ -1,3 +1,4 @@
 pgadmin-data/
 db-data/
 .env
+node_modules/

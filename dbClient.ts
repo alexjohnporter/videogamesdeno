@@ -1,13 +1,20 @@
-import { createClient } from "jsr:@supabase/supabase-js@2";
-const supabaseKey = process.env.SUPABASE_KEY;
+// import { PrismaClient } from './generated/client/deno/edge.ts'
+import { load } from "jsr:@std/dotenv";
 
-if (typeof supabaseKey !== "string") {
-  throw new Error("Invalid supabase key");
-}
+const envVars = await load();
 
-const supabase = createClient(
-  "https://xrrdrmyeqxygqvpyywfk.supabase.co",
-  supabaseKey,
-);
+// const prisma = new PrismaClient({
+//   datasources: {
+//     db: {
+//       url: envVars.DATABASE_URL,
+//     },
+//   },
+// });
 
-export { supabase };
+// export {prisma};
+
+import { Client } from "https://deno.land/x/postgres/mod.ts";
+
+const client = new Client(envVars.DATABASE_URL);
+
+export { client }; 
