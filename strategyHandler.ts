@@ -8,7 +8,7 @@ export class StrategyHandler {
   private strategies: HandlerStrategy[] = [
     new HelloWorldHandler(),
     new VideoGamesHandler(),
-    new AddReviewHandler()
+    new AddReviewHandler(),
     // ... other strategies
   ];
 
@@ -19,10 +19,15 @@ export class StrategyHandler {
 
     for (const strategy of this.strategies) {
       if (strategy.accepts(pathName, method)) {
-        return strategy.handle(req);
+        try {
+          return strategy.handle(req);
+        } catch {
+          return JsonResponse({ message: 'An error occurred' }, 404);
+        }
+        
       }
     }
 
-    return JsonResponse({message: 'Page not found'}, 404)
+    return JsonResponse({ message: "Page not found" }, 404);
   }
 }
