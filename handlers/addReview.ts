@@ -6,9 +6,8 @@ import generateWords from "jsr:@biegomar/lorem";
 export class AddReviewHandler implements HandlerStrategy {
   private reviewRepository: ReviewRepository;
 
-  constructor() {
-    //use proper DI here
-    this.reviewRepository = new ReviewRepository();
+  constructor(reviewRepository: ReviewRepository | null = null) {
+    this.reviewRepository = reviewRepository ?? new ReviewRepository();
   }
 
   getVideoGameId(pathName: string): number | boolean {
@@ -21,15 +20,15 @@ export class AddReviewHandler implements HandlerStrategy {
     return parseInt(id);
   }
 
-  accepts(pathName: string, method: string): boolean {
+  accepts(pathName: string, _method: string): boolean {
     return pathName.includes("/add-review") && !!this.getVideoGameId(pathName);
   }
 
   async handle(req: Request): Promise<Response> {
     const videoGameId = this.getVideoGameId(new URL(req.url).pathname);
 
-    if (typeof videoGameId !== "number") {
-      throw new Error("Bad video game id");
+    if (typeof videoGameId !== "number" || Number.isNaN(videoGameId)) {
+      return JsonResponse({ message: "Invalid video game id" }, 400);
     }
 
     const review = await this.reviewRepository.createNewReview(

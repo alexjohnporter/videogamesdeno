@@ -10,7 +10,7 @@ export class StrategyHandler {
     new HelloWorldHandler(),
     new VideoGamesHandler(),
     new AddReviewHandler(),
-    new GetReviewsHandler()
+    new GetReviewsHandler(),
     // ... other strategies
   ];
 
